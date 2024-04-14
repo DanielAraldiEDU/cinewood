@@ -7,6 +7,7 @@ const url = 'https://api.themoviedb.org/3/movie';
 const apiKey =
   'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlYWQ5ZjUxZmM4ODc4NmE1MzUxYWNiNGVjNDAwMWY2NSIsInN1YiI6IjVmNWY5ZmNhOGI5NTllMDAzNGIwYTY0OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.XuNsqVlzAK6Jr1eePXL-QQb5PMJ2V1xjmQDADLW40vg';
 
+let isMakingMoreMovies = false;
 let currentPage = 1;
 let allMovies = [];
 
@@ -68,6 +69,24 @@ async function loadMovies() {
   );
 }
 
+function findMovieById(id) {
+  const movie = allMovies.find(movie => movie.id === id);
+  if (!movie) return null;
+
+  const { title, overview, vote_average, release_date } = movie;
+
+  const voteAverageFormatted = vote_average.toFixed(1);
+  const dateFormatted = formatDate(release_date);
+
+  return {
+    id: id.toString(),
+    title,
+    overview,
+    voteAverage: voteAverageFormatted,
+    date: dateFormatted,
+  };
+}
+
 function openModal() {
   modalContainer.classList.remove('closed');
   modalContainer.classList.add('opened');
@@ -78,14 +97,24 @@ function closeModal() {
   modalContainer.classList.add('closed');
 }
 
-function handleModal(id) {
-  const movie = allMovies.find(movie => movie.id === id);
+function onChooseMovie(id, type) {
+  const movie = findMovieById(id);
   if (!movie) return;
 
-  const { title, overview, vote_average, release_date } = movie;
+  const periods = {
+    afternoon: { ...movie, type: 'Dublado 2D', hour: '14:00', seat: 'Sala 1' },
+    evening: { ...movie, type: 'Legendado', hour: '17:00', seat: 'Sala 2' },
+    night: { ...movie, type: 'Dublado 3D', hour: '20:00', seat: 'Sala 3' },
+  };
 
-  const voteAverageFormatted = vote_average.toFixed(1);
-  const dateFormatted = formatDate(release_date);
+  sessionStorage.setItem('movie', JSON.stringify(periods[type]));
+}
+
+function handleModal(id) {
+  const movie = findMovieById(id);
+  if (!movie) return;
+
+  const { title, overview, voteAverage, date } = movie;
 
   modal.innerHTML = `
     <h3 class='movie-title'>${title}</h3>
@@ -93,22 +122,55 @@ function handleModal(id) {
     <p>${overview}</p>
 
     <div class='classes'>
-      <button type='button'>Dublado 2D às 14:00</button>
-      <button type='button'>Legendado às 17:00</button>
-      <button type='button'>Dublado 3D às 20:00</button>
+      <button type='button' onclick='onChooseMovie(${id}, "afternoon")'>
+        <a href='./../src/pages/seats.html'>
+          Dublado 2D às 14:00
+        </a>
+      </button>
+
+      <button type='button' onclick='onChooseMovie(${id}, "evening")'>
+        <a href='./../src/pages/seats.html'>
+          Legendado às 17:00
+        </a>
+      </button>
+
+      <button type='button' onclick='onChooseMovie(${id}, "night")'>
+        <a href='./../src/pages/seats.html'>
+          Dublado 3D às 20:00
+        </a>
+      </button>
     </div>
 
     <div class='movie-footer'>
-      <span>${voteAverageFormatted}</span>
+      <span>${voteAverage}</span>
 
-      <span>${dateFormatted}</span>
+      <span>${date}</span>
     </div>
 
-    <button type='button' class='movie-button' onclick='closeModal()'>Fechar</button>
+    <button type='button' class='movie-button' onclick='closeModal()'>
+      Fechar
+    </button>
   `;
 
   const isClose = modalContainer.classList.contains('closed');
   isClose ? openModal() : closeModal();
 }
+
+async function onScrollEnd() {
+  if (!isMakingMoreMovies) {
+    const scrolledTo = window.scrollY + window.innerHeight;
+    const isAlmostOnEnd = document.body.scrollHeight - scrolledTo < 500;
+
+    if (isAlmostOnEnd) {
+      isMakingMoreMovies = true;
+      currentPage += 1;
+      await loadMovies();
+    }
+
+    isMakingMoreMovies = false;
+  }
+}
+
+window.addEventListener('scroll', onScrollEnd);
 
 loadMovies();

@@ -245,16 +245,19 @@ header h1 {
 
   padding: 1rem;
 
-  font-size: 1rem;
-  font-weight: 600;
-  color: #f1fffa;
-
   border-radius: 4px;
   border: none;
 
   cursor: pointer;
 
   background-color: #1b2f4f;
+}
+
+.classes button a {
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #f1fffa;
 }
 
 .classes button:hover {
