@@ -1,6 +1,6 @@
 const cards = document.querySelectorAll('.card');
 
-cards.forEach((card) => {
+cards.forEach(card => {
   const incrementButton = card.querySelector('.quantity button:last-child');
   const decrementButton = card.querySelector('.quantity button:first-child');
   const quantityElement = card.querySelector('.quantity-number');
@@ -29,11 +29,13 @@ const confirmButton = document.querySelector('#confirm');
 confirmButton.addEventListener('click', () => {
   const popcornArray = [];
 
-  cards.forEach((card) => {
+  cards.forEach(card => {
     const popcornName = card.querySelector('p').textContent;
     const quantity = card.querySelector('.quantity-number').textContent;
     const priceElement = card.querySelector('.price span');
-    const priceBase = parseFloat(priceElement.textContent.replace('R$', '').replace(',', '.'));
+    const priceBase = parseFloat(
+      priceElement.textContent.replace('R$', '').replace(',', '.')
+    );
 
     const popcornObject = {
       name: popcornName,
@@ -42,9 +44,6 @@ confirmButton.addEventListener('click', () => {
       totalPrice: priceBase * parseInt(quantity, 10),
     };
 
-    if (popcornObject.totalPrice > 0)
-      popcornArray.push(popcornObject);
+    if (popcornObject.totalPrice > 0) popcornArray.push(popcornObject);
   });
-
-  console.log(popcornArray);
 });
