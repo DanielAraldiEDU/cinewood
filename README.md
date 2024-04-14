@@ -1,2 +1,3 @@
-# cinewood
-Cinewood is a web painel to you mark the days to see a films.
+# Cinewood
+
+Cinewood is a web panel to you mark the days to see a films.
