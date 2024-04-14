@@ -1,0 +1,60 @@
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  width: 70%;
+  height: auto;
+}
+
+table thead tr td,
+table tbody tr td {
+  width: 1.5rem;
+  height: 3rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: #f1fffa;
+
+  text-align: center;
+
+  background-color: #1b2f4f;
+}
+
+table thead tr td:first-child,
+table thead tr td:nth-child(5),
+table thead tr td:nth-child(9),
+table thead tr td:nth-child(13),
+table tbody tr td:nth-child(5),
+table tbody tr td:nth-child(9),
+table tbody tr td:nth-child(13) {
+  width: 0.75rem;
+  height: 1.5rem;
+
+  background-color: transparent;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.pointer:hover {
+  filter: brightness(0.9);
+
+  transition: all 0.25s ease-out;
+}
+
+.reserved {
+  background-color: #ff4f89;
+}
