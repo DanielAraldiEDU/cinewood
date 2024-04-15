@@ -137,6 +137,8 @@ body {
 .quantity button:hover,
 .confirm:hover {
   filter: brightness(0.9);
+
+  transition: all 0.25s ease-out;
 }
 
 .quantity-number {
