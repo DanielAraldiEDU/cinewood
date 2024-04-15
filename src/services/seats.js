@@ -1,5 +1,5 @@
 const allSeats = document.querySelectorAll('.pointer');
-const confirmButton = document.querySelector('.confirm');
+const confirmButton = document.querySelector('.confirm-button');
 
 let reservedLocals = null;
 let reservedLocalsAmount = 0;

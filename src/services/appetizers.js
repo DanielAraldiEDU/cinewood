@@ -1,6 +1,6 @@
 const cards = document.querySelectorAll('.card');
 const total = document.querySelector('.total');
-const confirmButton = document.querySelector('.confirm');
+const confirmButton = document.querySelector('.confirm-button');
 
 function parseValueToInt(value) {
   return Number.parseInt(value, 10);
