@@ -126,13 +126,6 @@ body {
 
   margin-top: 2rem;
 
-  padding: 1rem 2rem;
-
-  font-size: 1.25rem;
-  font-weight: 700;
-
-  color: #f1fffa;
-
   border-radius: 1.25rem;
   border: none;
 
@@ -141,6 +134,26 @@ body {
   background-color: #1b2f4f;
 
   transition: background-color 0.3s ease;
+}
+
+.confirm a {
+  display: flex;
+
+  width: 100%;
+  height: 100%;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 1rem 2rem;
+
+  cursor: inherit;
+
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: none;
+
+  color: #f1fffa;
 }
 
 .quantity button:hover,
