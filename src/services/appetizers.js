@@ -1,15 +1,32 @@
 const cards = document.querySelectorAll('.card');
+const total = document.querySelector('.total');
+const confirmButton = document.querySelector('.confirm');
+
+function parseValueToInt(value) {
+  return Number.parseInt(value, 10);
+}
 
 cards.forEach(card => {
   const incrementButton = card.querySelector('.quantity button:last-child');
   const decrementButton = card.querySelector('.quantity button:first-child');
   const quantityElement = card.querySelector('.quantity-number');
+  const priceElement = card.querySelector('.price span');
 
   incrementButton.addEventListener('click', () => {
-    let quantity = parseInt(quantityElement.textContent, 10);
+    const quantity = parseValueToInt(quantityElement.textContent);
+    const totalPrice = Number.parseFloat(
+      total.textContent.replace('Preço Total: R$', '').replace(',', '.')
+    );
+    const price = Number.parseFloat(
+      priceElement.textContent.replace('R$', '').replace(',', '.')
+    );
+
     if (quantity < 10) {
-      quantityElement.textContent = quantity + 1;
-      if (quantity + 1 >= 10) {
+      const currentQuantity = quantity + 1;
+      quantityElement.textContent = currentQuantity;
+      total.textContent = `Preço Total: R$ ${totalPrice + price},00`;
+
+      if (currentQuantity >= 10) {
         incrementButton.classList.add('disabled');
       } else {
         decrementButton.classList.remove('disabled');
@@ -19,10 +36,20 @@ cards.forEach(card => {
   });
 
   decrementButton.addEventListener('click', () => {
-    let quantity = parseInt(quantityElement.textContent, 10);
+    const quantity = parseValueToInt(quantityElement.textContent);
+    const totalPrice = Number.parseFloat(
+      total.textContent.replace('Preço Total: R$', '').replace(',', '.')
+    );
+    const price = Number.parseFloat(
+      priceElement.textContent.replace('R$', '').replace(',', '.')
+    );
+
     if (quantity > 0) {
-      quantityElement.textContent = quantity - 1;
-      if (quantity - 1 <= 0) {
+      const currentQuantity = quantity - 1;
+      quantityElement.textContent = currentQuantity;
+      total.textContent = `Preço Total: R$ ${totalPrice - price},00`;
+
+      if (currentQuantity <= 0) {
         decrementButton.classList.add('disabled');
       } else {
         incrementButton.classList.remove('disabled');
@@ -32,26 +59,34 @@ cards.forEach(card => {
   });
 });
 
-const confirmButton = document.querySelector('.confirm');
-
-confirmButton.addEventListener('click', () => {
-  const popcornArray = [];
+function calculatePopcorns() {
+  const popcorns = [];
 
   cards.forEach(card => {
-    const popcornName = card.querySelector('p').textContent;
+    const name = card.querySelector('p').textContent;
     const quantity = card.querySelector('.quantity-number').textContent;
     const priceElement = card.querySelector('.price span');
-    const priceBase = parseFloat(
+    const priceBase = Number.parseFloat(
       priceElement.textContent.replace('R$', '').replace(',', '.')
     );
 
-    const popcornObject = {
-      name: popcornName,
-      quantity: parseInt(quantity, 10),
+    const popcorn = {
+      name,
+      quantity: parseValueToInt(quantity),
       priceBase: priceBase,
-      totalPrice: priceBase * parseInt(quantity, 10),
+      totalPrice: priceBase * parseValueToInt(quantity),
     };
 
-    if (popcornObject.totalPrice > 0) popcornArray.push(popcornObject);
+    if (popcorn.totalPrice > 0) popcorns.push(popcorn);
   });
-});
+
+  return popcorns;
+}
+
+function onClick() {
+  const popcorns = calculatePopcorns();
+
+  sessionStorage.setItem('popcorns', JSON.stringify(popcorns));
+}
+
+confirmButton.addEventListener('click', onClick);

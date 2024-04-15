@@ -46,7 +46,7 @@ body {
 
   border-radius: 8px;
 
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #f1fffa;
 }
 
 .card p {
@@ -96,7 +96,7 @@ body {
   font-size: 1rem;
   line-height: 1rem;
 
-  color: #fff;
+  color: #f1fffa;
 
   border-radius: 50%;
   border: none;
@@ -112,17 +112,26 @@ body {
   cursor: not-allowed;
 }
 
+.total {
+  margin-top: 1.5rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: #f1fffa;
+}
+
 .confirm {
   cursor: pointer;
 
-  margin-top: 2.5rem;
+  margin-top: 2rem;
 
   padding: 1rem 2rem;
 
   font-size: 1.25rem;
-  font-weight: bold;
+  font-weight: 700;
 
-  color: #fff;
+  color: #f1fffa;
 
   border-radius: 1.25rem;
   border: none;
