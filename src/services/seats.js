@@ -1,7 +1,8 @@
 const allSeats = document.querySelectorAll('.pointer');
+const confirmButton = document.querySelector('.confirm');
 
 let reservedLocals = null;
-let userSelectedLocal = false;
+let reservedLocalsAmount = 0;
 
 function getMovie() {
   const movie = sessionStorage.getItem('movie');
@@ -15,18 +16,37 @@ function getReservedLocals() {
   else reservedLocals = null;
 }
 
+function verifyIfLocalIsReserved(id) {
+  if (reservedLocals) {
+    for (let index = 0; index < reservedLocals.length; index++) {
+      if (reservedLocals.id === id) return true;
+    }
+  }
+  return false;
+}
+
+function handleAvailableButton() {
+  const isDisabled = confirmButton.classList.contains('disabled');
+  if (isDisabled && reservedLocalsAmount > 0) {
+    confirmButton.classList.remove('disabled');
+  } else if (reservedLocalsAmount <= 0) {
+    confirmButton.classList.add('disabled');
+  }
+}
+
 function handleReservedLocal(seat) {
   const seatId = seat.dataset.id;
 
-  if (reservedLocals) {
-    for (let index = 0; index < reservedLocals.length; index++) {
-      if (reservedLocals.id === seatId) return;
-    }
-  }
+  if (verifyIfLocalIsReserved(seatId)) return;
 
   const isReserved = seat.classList.contains('reserved');
-  if (isReserved) seat.classList.remove('reserved');
-  else seat.classList.add('reserved');
+  if (isReserved) {
+    reservedLocalsAmount--;
+    seat.classList.remove('reserved');
+  } else {
+    reservedLocalsAmount++;
+    seat.classList.add('reserved');
+  }
 
   if (isReserved) {
     const reserves = sessionStorage.getItem('reservedLocals');
@@ -42,12 +62,14 @@ function handleReservedLocal(seat) {
   }
 }
 
+function onReserveLocal(seat) {
+  getReservedLocals();
+  handleReservedLocal(seat);
+  handleAvailableButton();
+}
+
 getReservedLocals();
 
 allSeats.forEach(seat => {
-  seat.addEventListener('click', () => {
-    getReservedLocals();
-
-    handleReservedLocal(seat);
-  });
+  seat.addEventListener('click', () => onReserveLocal(seat));
 });
