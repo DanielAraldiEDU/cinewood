@@ -66,7 +66,7 @@ table tbody tr td:nth-child(13) {
 
   padding: 1rem 2rem;
 
-  color: #fff;
+  color: #f1fffa;
 
   border-radius: 1.25rem;
   border: none;
@@ -88,10 +88,10 @@ table tbody tr td:nth-child(13) {
   cursor: inherit;
 
   font-size: 1.25rem;
-  font-weight: bold;
+  font-weight: 700;
   text-decoration: none;
 
-  color: #fff;
+  color: #f1fffa;
 }
 
 .disabled {
