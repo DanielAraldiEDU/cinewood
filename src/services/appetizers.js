@@ -9,7 +9,12 @@ cards.forEach(card => {
     let quantity = parseInt(quantityElement.textContent, 10);
     if (quantity < 10) {
       quantityElement.textContent = quantity + 1;
-      decrementButton.classList.remove('disabled');
+      if (quantity + 1 >= 10) {
+        incrementButton.classList.add('disabled');
+      } else {
+        decrementButton.classList.remove('disabled');
+        incrementButton.classList.remove('disabled');
+      }
     }
   });
 
@@ -19,12 +24,15 @@ cards.forEach(card => {
       quantityElement.textContent = quantity - 1;
       if (quantity - 1 <= 0) {
         decrementButton.classList.add('disabled');
+      } else {
+        incrementButton.classList.remove('disabled');
+        decrementButton.classList.remove('disabled');
       }
     }
   });
 });
 
-const confirmButton = document.querySelector('#confirm');
+const confirmButton = document.querySelector('.confirm');
 
 confirmButton.addEventListener('click', () => {
   const popcornArray = [];
