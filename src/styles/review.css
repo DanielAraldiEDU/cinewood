@@ -24,18 +24,6 @@ span {
   border-radius: 8px;
 }
 
-.button-container {
-  display: flex;
-  flex-direction: row;
-
-  width: 100%;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 1rem;
-}
-
 .confirm-button {
   width: 8rem;
 }

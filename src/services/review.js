@@ -57,6 +57,8 @@ function renderAppetizers() {
 
   appetizersOfSessionStorage = data;
 
+  if (data.length === 0) appetizers.style.margin = '0.5rem 0';
+
   for (let index = 0; index < data.length; index++) {
     const { name, totalPrice, priceBase, quantity } = data[index];
     sumPrices += totalPrice;
