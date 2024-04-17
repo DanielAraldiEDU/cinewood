@@ -59,6 +59,10 @@ table tbody tr td:nth-child(13) {
   background-color: #ff4f89;
 }
 
+.confirm-button {
+  width: 8rem;
+}
+
 .disabled {
   opacity: 0.7;
 

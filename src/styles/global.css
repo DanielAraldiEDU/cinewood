@@ -43,6 +43,18 @@ header h1 {
   text-align: center;
 }
 
+.button-container {
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 1rem;
+}
+
 .confirm-button {
   cursor: pointer;
 

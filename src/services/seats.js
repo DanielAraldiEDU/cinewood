@@ -1,5 +1,5 @@
 const allSeats = document.querySelectorAll('.pointer');
-const confirmButton = document.querySelector('.confirm-button');
+const confirmButton = document.querySelector('.confirm');
 
 let reservedLocals = null;
 let reservedLocalsAmount = 0;
@@ -8,12 +8,6 @@ function getMovie() {
   const movie = sessionStorage.getItem('movie');
   if (movie) return JSON.parse(movie);
   else return null;
-}
-
-function getReservedLocals() {
-  const reserves = sessionStorage.getItem('reservedLocals');
-  if (reserves) reservedLocals = JSON.parse(reserves);
-  else reservedLocals = null;
 }
 
 function verifyIfLocalIsReserved(id) {
@@ -49,27 +43,26 @@ function handleReservedLocal(seat) {
   }
 
   if (isReserved) {
-    const reserves = sessionStorage.getItem('reservedLocals');
-    const reservesAsJson = JSON.parse(reserves);
-    const onlyReserved = reservesAsJson.filter(({ id }) => id !== seatId);
-    sessionStorage.setItem('reservedLocals', JSON.stringify(onlyReserved));
+    const onlyReserved = reservedLocals.filter(({ id }) => id !== seatId);
+    reservedLocals = onlyReserved;
   } else {
     const reserves = reservedLocals
       ? [...reservedLocals, { id: seatId }]
       : [{ id: seatId }];
 
-    sessionStorage.setItem('reservedLocals', JSON.stringify(reserves));
+    reservedLocals = reserves;
   }
 }
 
 function onReserveLocal(seat) {
-  getReservedLocals();
   handleReservedLocal(seat);
   handleAvailableButton();
 }
 
-getReservedLocals();
-
 allSeats.forEach(seat => {
   seat.addEventListener('click', () => onReserveLocal(seat));
 });
+
+confirmButton.addEventListener('click', () =>
+  sessionStorage.setItem('reservedLocals', JSON.stringify(reservedLocals))
+);
