@@ -1,6 +1,7 @@
 const allSeats = document.querySelectorAll('.pointer');
 const confirmButton = document.querySelector('.confirm');
 
+let reversesDone = [];
 let reservedLocals = null;
 let reservedLocalsAmount = 0;
 
@@ -65,13 +66,14 @@ function handleReservedLocal(seat) {
   }
 
   if (isReserved) {
-    const onlyReserved = reservedLocals.filter(({ id }) => id !== seatId);
-    reservedLocals = onlyReserved;
+    reservedLocals = reservedLocals.filter(({ id }) => id !== seatId);
+    reversesDone = reversesDone.filter(({ id }) => id !== seatId);
   } else {
     const reserves = reservedLocals
       ? [...reservedLocals, { id: seatId }]
       : [{ id: seatId }];
 
+    reversesDone.push({ id: seatId });
     reservedLocals = reserves;
   }
 }
@@ -86,7 +88,7 @@ allSeats.forEach(seat => {
 });
 
 confirmButton.addEventListener('click', () =>
-  sessionStorage.setItem('reservedLocals', JSON.stringify(reservedLocals))
+  sessionStorage.setItem('reservedLocals', JSON.stringify(reversesDone))
 );
 
 getReservesThisMovie();
