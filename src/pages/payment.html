@@ -22,15 +22,13 @@
               <input type="radio" id="credit-card" name="payment" value="credit-card" checked>
 
               <label for="credit-card" class="payment-button">
-                <span class="icon">&#128179;</span>
                 Cartão
               </label>
 
               <input type="radio" id="pix" name="payment" value="pix">
 
               <label for="pix" class="payment-button">
-                <span class="icon">&#128179;</span>
-                Pix
+                PIX
               </label>
             </div>
 
@@ -45,9 +43,13 @@
             </div>
 
             <div class="pix-details not-selected">
-              <h2>Chave pix:</h2>
+              <h3>Chave:</h3>
 
-              <h2>33837695243530525399671487891935</h2>
+              <div>
+                <p class="pix-key">cinewood@cine.com.br</p>
+
+                <button class="copy-button" onclick="onCopy()">Copiar</button>
+              </div>
             </div>
 
             <button class="realize-button">

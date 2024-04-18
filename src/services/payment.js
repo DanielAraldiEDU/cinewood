@@ -1,6 +1,7 @@
 const radios = document.querySelectorAll('input[type="radio"][name="payment"]');
 const creditCardDetails = document.querySelector('.credit-card-details');
 const pixDetails = document.querySelector('.pix-details');
+const pixKey = document.querySelector('.pix-key');
 const cardInputs = creditCardDetails.querySelectorAll('input');
 const realizeButton = document.querySelector('.realize-button');
 const realizeLink = document.querySelector('.realize-button a');
@@ -102,6 +103,12 @@ function updateTotalPriceDisplay() {
   const price = ticketsPrice + appetizersPrice;
 
   totalPriceElement.textContent = `R$ ${price.toFixed(2).replace('.', ',')}`;
+}
+
+function onCopy() {
+  const text = pixKey.textContent;
+  navigator.clipboard.writeText(text);
+  window.alert('Chave do PIX copiada!');
 }
 
 expiryDate.addEventListener('input', formatExpiryDate);
