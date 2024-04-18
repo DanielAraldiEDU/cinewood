@@ -4,19 +4,40 @@ const confirmButton = document.querySelector('.confirm');
 let reservedLocals = null;
 let reservedLocalsAmount = 0;
 
-function getMovie() {
-  const movie = sessionStorage.getItem('movie');
-  if (movie) return JSON.parse(movie);
+function getSessionStorage(key) {
+  const data = sessionStorage.getItem(key);
+  if (data) return JSON.parse(data);
   else return null;
 }
 
-function verifyIfLocalIsReserved(id) {
-  if (reservedLocals) {
-    for (let index = 0; index < reservedLocals.length; index++) {
-      if (reservedLocals.id === id) return true;
+function getReservesThisMovie() {
+  const movies = getSessionStorage('movies');
+  const movie = getSessionStorage('movie');
+
+  if (!movies || !movie) return;
+
+  for (let index = 0; index < movies.length; index++) {
+    const currentMovie = movies[index];
+    const isSameMovie = currentMovie.movie.id === movie.id;
+    const isSamePeriod = currentMovie.movie.type === movie.type;
+
+    if (isSameMovie && isSamePeriod) {
+      for (let j = 0; j < currentMovie.seats.length; j++) {
+        const currentSeatId = currentMovie.seats[j].id;
+        allSeats.forEach(seat => {
+          const reservedSeatId = seat.dataset.id;
+          if (currentSeatId === reservedSeatId) {
+            const reserves = reservedLocals
+              ? [...reservedLocals, { id: currentSeatId }]
+              : [{ id: currentSeatId }];
+            reservedLocals = reserves;
+
+            seat.classList.add('disabled');
+          }
+        });
+      }
     }
   }
-  return false;
 }
 
 function handleAvailableButton() {
@@ -29,9 +50,10 @@ function handleAvailableButton() {
 }
 
 function handleReservedLocal(seat) {
-  const seatId = seat.dataset.id;
+  const isDisabled = seat.classList.contains('disabled');
+  if (isDisabled) return;
 
-  if (verifyIfLocalIsReserved(seatId)) return;
+  const seatId = seat.dataset.id;
 
   const isReserved = seat.classList.contains('reserved');
   if (isReserved) {
@@ -66,3 +88,5 @@ allSeats.forEach(seat => {
 confirmButton.addEventListener('click', () =>
   sessionStorage.setItem('reservedLocals', JSON.stringify(reservedLocals))
 );
+
+getReservesThisMovie();

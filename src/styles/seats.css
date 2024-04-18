@@ -59,6 +59,12 @@ table tbody tr td:nth-child(13) {
   background-color: #ff4f89;
 }
 
+td.disabled {
+  cursor: not-allowed;
+
+  background-color: #ccc;
+}
+
 .confirm-button {
   width: 8rem;
 }
