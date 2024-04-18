@@ -14,9 +14,11 @@ const reservedLocals = JSON.parse(sessionStorage.getItem('reservedLocals')) || [
 const popcorns = JSON.parse(sessionStorage.getItem('popcorns')) || [];
 
 function formatExpiryDate(event) {
-  let value = event.target.value.replace(/\D/g, '').substring(0, 4);
-  value = value.replace(/(\d{2})/g, '$1/').trim().slice(0, 5);
-  event.target.value = value;
+  if (event.inputType !== "deleteContentBackward") {
+    let value = event.target.value.replace(/\D/g, '').substring(0, 4);
+    value = value.replace(/(\d{2})/g, '$1/').trim().slice(0, 5);
+    event.target.value = value;
+  }
 }
 
 function formatCardNumber(event) {
