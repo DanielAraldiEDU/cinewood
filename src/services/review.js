@@ -68,11 +68,15 @@ function renderAppetizers() {
         <p class="appetizer-name"><span>${quantity}x</span> - ${name}</p>
 
         <p class="appetizer-total">
-          Preço total do aperitivo: <span>R$ ${totalPrice},00</span>
+          Preço total do aperitivo: <span>R$ ${totalPrice
+            .toFixed(2)
+            .replace('.', ',')}</span>
         </p>
 
         <span class="appetizer-base-price">
-          Preço por unidade: <span>R$ ${priceBase},00</span>
+          Preço por unidade: <span>R$ ${priceBase
+            .toFixed(2)
+            .replace('.', ',')}</span>
         </span>
       </div>
     `;
@@ -80,7 +84,7 @@ function renderAppetizers() {
 
   totalToPay.innerHTML += `
     <p class="total-price">
-      Preço Total: R$ ${sumPrices},00
+      Preço Total: R$ ${sumPrices.toFixed(2).replace('.', ',')}
     </p>`;
 }
 
