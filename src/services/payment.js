@@ -134,7 +134,7 @@ reservedLocals.forEach(local => {
 
   const itemPrice = document.createElement('span');
   itemPrice.classList.add('item-price');
-  itemPrice.textContent = 'R$ 20.00';
+  itemPrice.textContent = 'R$ 20,00';
 
   orderItem.appendChild(itemName);
   orderItem.appendChild(itemPrice);
