@@ -79,12 +79,31 @@ function enableButton() {
   realizeLink.href = './review.html';
 }
 
+function updatePaymentType() {
+  let type = null;
+  const paymentType = document.querySelector('input[type="radio"][name="payment"]:checked').value;
+
+  if (paymentType === 'credit-card') {
+    type = 'Cartão';
+  }
+
+  if (paymentType === 'pix') {
+    type = 'PIX';
+  }
+
+  const paymentData = JSON.parse(sessionStorage.getItem('payment')) || {};
+  paymentData.type = type;
+
+  sessionStorage.setItem('payment', JSON.stringify(paymentData));
+}
+
 function updatePaymentData() {
   const ticketsPrice = reservedLocals.length * 20;
   const appetizersPrice = popcorns.reduce(
     (total, popcorn) => total + popcorn.totalPrice,
     0
   );
+
   const price = ticketsPrice + appetizersPrice;
 
   const paymentData = {
@@ -121,6 +140,7 @@ cardholderInput.addEventListener('input', updatePaymentData);
 
 radios.forEach(radio => {
   radio.addEventListener('change', updatePaymentDetails);
+  radio.addEventListener('change', updatePaymentType);
 });
 
 cardInputs.forEach(input => {
@@ -168,3 +188,4 @@ popcorns.forEach(popcorn => {
 updatePaymentDetails();
 updatePaymentData();
 updateTotalPriceDisplay();
+updatePaymentType();
