@@ -4,7 +4,6 @@ const appetizers = document.querySelector('.appetizers');
 const payment = document.querySelector('.payment');
 const totalToPay = document.querySelector('.total-to-pay');
 
-let sumPrices = 0;
 let movieOfSessionStorage = null;
 let seatsOfSessionStorage = null;
 let appetizersOfSessionStorage = null;
@@ -61,7 +60,6 @@ function renderAppetizers() {
 
   for (let index = 0; index < data.length; index++) {
     const { name, totalPrice, priceBase, quantity } = data[index];
-    sumPrices += totalPrice;
 
     appetizers.innerHTML += `
       <div class="appetizer-content">
@@ -81,11 +79,6 @@ function renderAppetizers() {
       </div>
     `;
   }
-
-  totalToPay.innerHTML += `
-    <p class="total-price">
-      Preço Total: R$ ${sumPrices.toFixed(2).replace('.', ',')}
-    </p>`;
 }
 
 function renderPayment() {
@@ -94,7 +87,17 @@ function renderPayment() {
 
   paymentOfSessionStorage = data;
 
-  console.log(data);
+  const { price, type } = data;
+
+  payment.innerHTML += `
+    <p class="type-price">Tipo de pagamento: 
+      <span>${type}</span>
+    </p>`;
+
+  totalToPay.innerHTML += `
+    <p class="total-price">
+      Preço Total: R$ ${price.toFixed(2).replace('.', ',')}
+    </p>`;
 }
 
 function onFinish() {
