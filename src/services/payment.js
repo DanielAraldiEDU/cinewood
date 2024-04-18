@@ -10,7 +10,8 @@ const expiryDate = document.getElementById('expiry-date');
 const totalPriceElement = document.getElementById('total-price');
 const cardholderInput = document.getElementById('card-name');
 const orderDetails = document.querySelector('.order-details');
-const reservedLocals = JSON.parse(sessionStorage.getItem('reservedLocals')) || [];
+const reservedLocals =
+  JSON.parse(sessionStorage.getItem('reservedLocals')) || [];
 const popcorns = JSON.parse(sessionStorage.getItem('popcorns')) || [];
 
 function formatExpiryDate(event) {
@@ -31,6 +32,28 @@ function limitCVV(event) {
   event.target.value = event.target.value.replace(/[^0-9]/g, '').slice(0, 3);
 }
 
+function checkCardInputs() {
+  if (document.getElementById('credit-card').checked) {
+    for (let input of cardInputs) {
+      if (!input.value) return disableButton();
+    }
+
+    const month = Number.parseInt(expiryDate.value.slice(0, 2), 10);
+    const year = Number.parseInt(expiryDate.value.slice(3), 10);
+    const currentYear = new Date().getFullYear() % 100;
+
+    if (month < 1 || month > 12 || year < currentYear) return disableButton();
+
+    if (
+      cvv.value.length !== 3 ||
+      cardNumber.value.replace(/\s/g, '').length !== 16
+    )
+      return disableButton();
+  }
+
+  enableButton();
+}
+
 function updatePaymentDetails() {
   if (document.getElementById('credit-card').checked) {
     creditCardDetails.classList.remove('not-selected');
@@ -40,32 +63,6 @@ function updatePaymentDetails() {
     pixDetails.classList.remove('not-selected');
   }
   checkCardInputs();
-}
-
-function checkCardInputs() {
-  if (document.getElementById('credit-card').checked) {
-    for (let input of cardInputs) {
-      if (input.value === '') {
-        disableButton();
-        return;
-      }
-    }
-
-    const month = parseInt(expiryDate.value.slice(0, 2), 10);
-    const year = parseInt(expiryDate.value.slice(3), 10);
-    const currentYear = new Date().getFullYear() % 100;
-
-    if (month < 1 || month > 12 || year < currentYear) {
-      disableButton();
-      return;
-    }
-
-    if (cvv.value.length !== 3 || cardNumber.value.replace(/\s/g, '').length !== 16) {
-      disableButton();
-      return;
-    }
-  }
-  enableButton();
 }
 
 function disableButton() {
@@ -79,15 +76,17 @@ function enableButton() {
 }
 
 function updatePaymentData() {
-
   const ticketsPrice = reservedLocals.length * 20;
-  const appetizersPrice = popcorns.reduce((total, popcorn) => total + popcorn.totalPrice, 0);
+  const appetizersPrice = popcorns.reduce(
+    (total, popcorn) => total + popcorn.totalPrice,
+    0
+  );
   const price = ticketsPrice + appetizersPrice;
 
   const paymentData = {
     ticketsPrice,
     appetizersPrice,
-    price
+    price,
   };
 
   sessionStorage.setItem('payment', JSON.stringify(paymentData));
@@ -95,11 +94,14 @@ function updatePaymentData() {
 
 function updateTotalPriceDisplay() {
   const ticketsPrice = reservedLocals.length * 20;
-  const appetizersPrice = popcorns.reduce((total, popcorn) => total + popcorn.totalPrice, 0);
+  const appetizersPrice = popcorns.reduce(
+    (total, popcorn) => total + popcorn.totalPrice,
+    0
+  );
 
   const price = ticketsPrice + appetizersPrice;
 
-  totalPriceElement.textContent = `R$ ${price.toFixed(2)}`;
+  totalPriceElement.textContent = `R$ ${price.toFixed(2).replace('.', ',')}`;
 }
 
 expiryDate.addEventListener('input', formatExpiryDate);
@@ -143,14 +145,15 @@ popcorns.forEach(popcorn => {
 
   const itemPrice = document.createElement('span');
   itemPrice.classList.add('item-price');
-  itemPrice.textContent = `R$ ${popcorn.totalPrice.toFixed(2)}`;
+  itemPrice.textContent = `R$ ${popcorn.totalPrice
+    .toFixed(2)
+    .replace('.', ',')}`;
 
   orderItem.appendChild(itemName);
   orderItem.appendChild(itemPrice);
 
   orderDetails.appendChild(orderItem);
 });
-
 
 updatePaymentDetails();
 updatePaymentData();

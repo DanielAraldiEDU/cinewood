@@ -1,15 +1,18 @@
 body {
   display: flex;
   flex-direction: column;
+
   justify-content: center;
 }
 
 .container {
   display: flex;
   flex: 1;
-  min-height: 100vh;
-  margin: auto;
   flex-direction: column;
+
+  min-height: 100vh;
+
+  margin: auto;
 }
 
 .item-flex {
@@ -19,13 +22,16 @@ body {
 
 .checkout {
   width: 70%;
+
   padding: 2.5rem 3.75rem;
+
   border-right: 1px solid #ccc;
 }
 
-.checkout>h2 {
-  color: white;
-  margin-bottom: 1.875rem;
+.checkout > h2 {
+  margin-bottom: 1.75rem;
+
+  color: #f1fffa;
 }
 
 .payment-form {
@@ -34,53 +40,62 @@ body {
 
 .payment-method {
   display: flex;
-  align-items: center;
-  gap: 1.875rem;
-  margin-bottom: 2.5rem;
-}
 
+  align-items: center;
+
+  margin-bottom: 2.5rem;
+
+  gap: 1.75rem;
+}
 
 .payment-button {
   display: flex;
-  align-items: center;
+
   width: 70%;
-  border: 1px solid white;
-  border-radius: 0.3125rem;
-  padding: 0.938rem 1.875rem;
-  gap: 1.25rem;
+
   cursor: pointer;
+
+  align-items: center;
+
+  padding: 1rem 1.75rem;
+
+  gap: 1.25rem;
+
+  border: 1px solid #f1fffa;
+  border-radius: 0.25rem;
 }
 
 .payment-button.checked {
-  border-color: #007bff
+  border-color: #007bff;
 }
 
 .icon {
-  margin-right: 0.3rem;
+  margin-right: 0.25rem;
 }
 
-input[type="radio"] {
+input[type='radio'] {
   display: none;
 }
 
-input[type="radio"]:checked+.payment-button {
-  color: #fff;
+input[type='radio']:checked + .payment-button {
+  color: #f1fffa;
+
   border-color: #007bff;
 }
 
 .credit-card-details {
   display: flex;
-  gap: 1.25rem;
   flex-direction: column;
+
+  gap: 1.25rem;
 }
 
 .payment-form input {
-  padding: 0.625rem 0.938rem;
-  font-size: 1.125rem;
+  padding: 0.5rem 1rem;
+
+  font-size: 1.25rem;
   font-weight: 500;
 }
-
-
 
 .not-selected {
   display: none;
@@ -88,43 +103,59 @@ input[type="radio"]:checked+.payment-button {
 
 .realize-button {
   display: flex;
-  margin-top: 40px;
-  justify-content: center;
-  border: none;
+
   cursor: pointer;
-  background-color: #007bff;
+
+  justify-content: center;
+
+  margin-top: 2.5rem;
+
+  padding: 0.813rem 3.75rem;
+
   font-weight: 500;
-  padding: 0.813rem 2.813rem;
+  color: #f1fffa;
+
+  background-color: #007bff;
+
+  border: none;
 }
 
 .realize-button:disabled {
-  cursor: default;
+  cursor: not-allowed;
 }
 
 .order-summery {
   display: flex;
   flex-direction: column;
+
   width: 36rem;
-  margin-left: 40px;
+
+  margin-left: 2.5rem;
+
   padding: 2.5rem 3.75rem;
+
   border: 1px solid red;
 }
 
-.order-summery>h2 {
-  color: white;
-  margin-bottom: 1.875rem;
+.order-summery > h2 {
+  color: #f1fffa;
+
+  margin-bottom: 1.75rem;
 }
 
 .order-container {
   display: flex;
+
   flex-direction: column;
 }
 
 .order-item {
   display: flex;
+
   justify-content: space-between;
 
-  margin-bottom: 10px;
+  margin-bottom: 0.75rem;
+
   padding: 1rem 2rem;
 }
 
@@ -133,25 +164,29 @@ input[type="radio"]:checked+.payment-button {
   margin-bottom: 2rem;
 }
 
-.order-item>span {
+.order-item > span {
   font-weight: 700;
+  color: #f1fffa;
 }
 
 .total-order {
   display: flex;
   flex-direction: column;
+
   width: 36rem;
+
+  margin-left: 2.5rem;
+
   padding: 2.5rem 1rem;
-  margin-left: 40px;
-  border: 1px solid red;
+
+  border: 1px solid #ff4f89;
 }
 
 .total {
-
   display: flex;
   justify-content: space-between;
 
-  margin-bottom: 10px;
-  padding: 1rem 2rem;
+  margin-bottom: 0.75rem;
 
+  padding: 1rem 2rem;
 }

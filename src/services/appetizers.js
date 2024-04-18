@@ -24,7 +24,9 @@ cards.forEach(card => {
     if (quantity < 10) {
       const currentQuantity = quantity + 1;
       quantityElement.textContent = currentQuantity;
-      total.textContent = `Preço Total: R$ ${totalPrice + price},00`;
+      total.textContent = `Preço Total: R$ ${(totalPrice + price)
+        .toFixed(2)
+        .replace('.', ',')}`;
 
       if (currentQuantity >= 10) {
         incrementButton.classList.add('disabled');
@@ -47,7 +49,9 @@ cards.forEach(card => {
     if (quantity > 0) {
       const currentQuantity = quantity - 1;
       quantityElement.textContent = currentQuantity;
-      total.textContent = `Preço Total: R$ ${totalPrice - price},00`;
+      total.textContent = `Preço Total: R$ ${(totalPrice - price)
+        .toFixed(2)
+        .replace('.', ',')}`;
 
       if (currentQuantity <= 0) {
         decrementButton.classList.add('disabled');
