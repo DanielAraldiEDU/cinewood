@@ -97,6 +97,7 @@ function updatePaymentType() {
   sessionStorage.setItem('payment', JSON.stringify(paymentData));
 }
 
+
 function updatePaymentData() {
   const ticketsPrice = reservedLocals.length * 20;
   const appetizersPrice = popcorns.reduce(
@@ -136,7 +137,6 @@ function onCopy() {
 expiryDate.addEventListener('input', formatExpiryDate);
 cardNumber.addEventListener('input', formatCardNumber);
 cvv.addEventListener('input', limitCVV);
-cardholderInput.addEventListener('input', updatePaymentData);
 
 radios.forEach(radio => {
   radio.addEventListener('change', updatePaymentDetails);
