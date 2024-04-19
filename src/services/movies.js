@@ -29,7 +29,7 @@ function renderBanner(allMovies) {
     banner.innerHTML += `
     <img src=${backdropUrl} class='banner-image' alt='Banner image' />
 
-    <p class='banner-text'>Find the best movies for you watching!</p>
+    <p class='banner-text'>Find the best movies for you watch!</p>
   `;
   }
 }
