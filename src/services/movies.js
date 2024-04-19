@@ -21,6 +21,19 @@ function getRandomBackdropMovie(movies) {
   return `https://image.tmdb.org/t/p/original${backdrop}`;
 }
 
+function renderBanner(allMovies) {
+  const isFirstPage = currentPage === 1;
+  if (isFirstPage) {
+    const backdropUrl = getRandomBackdropMovie(allMovies);
+
+    banner.innerHTML += `
+    <img src=${backdropUrl} class='banner-image' alt='Banner image' />
+
+    <p class='banner-text'>Find the best movies for you watching!</p>
+  `;
+  }
+}
+
 async function loadMovies() {
   const listMoviesUrl = `${url}/now_playing?language=pt-BR&page=${currentPage}`;
   const options = {
@@ -33,38 +46,35 @@ async function loadMovies() {
 
   const response = await fetch(listMoviesUrl, options);
   const data = await response.json();
-  allMovies = data.results;
+  previousIdOfAllMovies = allMovies.map(({ id }) => id);
+  allMovies.push(...data.results);
 
-  const backdropUrl = getRandomBackdropMovie(allMovies);
-
-  banner.innerHTML += `
-    <img src=${backdropUrl} class='banner-image' alt='Banner image' />
-
-    <p class='banner-text'>Find the best movies for you watching!</p>
-  `;
+  renderBanner(allMovies);
 
   allMovies.forEach(
     ({ id, title, overview, vote_average, poster_path, release_date }) => {
-      const posterPathUrl = `https://image.tmdb.org/t/p/original${poster_path}`;
-      const voteAverageFormatted = vote_average.toFixed(1);
-      const dateFormatted = formatDate(release_date);
+      if (!previousIdOfAllMovies.includes(id)) {
+        const posterPathUrl = `https://image.tmdb.org/t/p/original${poster_path}`;
+        const voteAverageFormatted = vote_average.toFixed(1);
+        const dateFormatted = formatDate(release_date);
 
-      movies.innerHTML += `
-      <button type='button' class='movie' onclick='handleModal(${id})'>
-        <div class='movie-container'>
-          <img src=${posterPathUrl} class='movie-image' alt=${title} />
-
-          <h3 class='movie-title'>${title}</h3>
-
-          <p class='movie-overview'>${overview}</p>
-        </div>
-
-        <div class='movie-footer'>
-          <span>${voteAverageFormatted}</span>
-
-          <span>${dateFormatted}</span>
-        </div>
-      </button>`;
+        movies.innerHTML += `
+        <button type='button' class='movie' onclick='handleModal(${id})'>
+          <div class='movie-container'>
+            <img src=${posterPathUrl} class='movie-image' alt=${title} />
+  
+            <h3 class='movie-title'>${title}</h3>
+  
+            <p class='movie-overview'>${overview}</p>
+          </div>
+  
+          <div class='movie-footer'>
+            <span>${voteAverageFormatted}</span>
+  
+            <span>${dateFormatted}</span>
+          </div>
+        </button>`;
+      }
     }
   );
 }
