@@ -65,7 +65,7 @@ async function loadMovies() {
   
             <h3 class='movie-title'>${title}</h3>
   
-            <p class='movie-overview'>${overview}</p>
+            ${overview ? `<p class='movie-overview'>${overview}</p>` : ''}
           </div>
   
           <div class='movie-footer'>
